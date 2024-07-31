@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do</title>
+    <link rel="stylesheet" href="/todo.css">
+</head>
+<body>
+    <div class="todo-container">
+        <div class="todo-app">
+            <h1>Todo App</h1>
+            <form action="#" id="todoForm">
+                <input type="text" placeholder="What do you need to do?" class="todo-input">
+            </form>
+            <ul class="todo-list">
+                <li class="todo-lists">
+                    <div class="todo-item">
+                        <input type="checkbox">
+                        <div class="todo-label">Finish JavaScript Series</div>
+                        <button class="button">&times;</button>
+                    </div>
+                </li>
+            </ul>
+            <hr>
+            <div class="remaining">
+                <div>3 items remaining</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const todoForm = document.querySelector('#todoForm');
+        const todoFormInput = document.querySelector('.todo-input');
+        const todoList = document.querySelector('.todo-list');
+        const todoItem = document.querySelector('.todo-lists');
+
+        todoForm.addEventListener('submit', event => {
+            event.preventDefault();
+            if (todoFormInput.value.trim() === '') return; 
+            const newTodoItem = todoItem.cloneNode(true);
+            newTodoItem.querySelector('.todo-label').textContent = todoFormInput.value;
+            todoList.append(newTodoItem);
+            todoFormInput.value = '';
+        });
+
+        todoList.addEventListener('click', event => {
+            if (event.target.classList.contains('button')) {
+                console.log('deleting todo');
+                event.target.closest('.todo-lists').remove(); 
+            }
+        });
+        todoList.addEventListener('change', event => {
+            if (event.target.type === 'checkbox') {
+                const label = event.target.nextElementSibling;
+                if (event.target.checked) {
+                    label.style.textDecoration = 'line-through';
+                } else {
+                    label.style.textDecoration = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
